@@ -16,10 +16,10 @@ series_path = ''
 
 # Create a dictionary to map file extensions to destination folders
 folders = {
-    '.webm''.mkv''.mp4': movies_path,
-    '.jpg''.jpeg''.png': pictures_path,
+    '.mkv': movies_path,
+    '.png': pictures_path,
     '.mp3': music_path,
-    '.zip''.exe': zip_files_path,
+    '.exe': zip_files_path,
    '.mkv': series_path
 }
 
