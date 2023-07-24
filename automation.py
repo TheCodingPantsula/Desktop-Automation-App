@@ -5,14 +5,14 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 # Set the path to the downloads folder
-downloads_path = 'C:/Users/smngv/Downloads/automation.py'
+downloads_path = ''
 
 # Set the paths to the destination folders
-movies_path = 'C:/Users/smngv/Videos/Movies'
-pictures_path = 'C:/Users/smngv/OneDrive/Pictures'
-music_path = 'C:/Users/smngv/Music'
-zip_files_path = 'C:/Users/smngv/OneDrive/Documents/zip'
-series_path = 'C:/Users/smngv/Videos/Series'
+movies_path = ''
+pictures_path = ''
+music_path = ''
+zip_files_path = ''
+series_path = ''
 
 # Create a dictionary to map file extensions to destination folders
 folders = {
