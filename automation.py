@@ -1,101 +1,37 @@
 import os
 import shutil
-import hashlib
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 
 # Set the path to the downloads folder
-downloads_path = ''
+downloads_path = 'C:/Users/smngv/Downloads'
 
 # Set the paths to the destination folders
-movies_path = ''
-pictures_path = ''
-music_path = ''
-zip_files_path = ''
-series_path = ''
+movies_path = 'C:/Users/smngv/Videos/Movies'
+music_path = 'C:/Users/smngv/Music'
+documents_path = 'C:/Users/smngv/Documents'
+pictures_path = 'C:/Users/smngv/OneDrive/Pictures/Downloaded'
 
 # Create a dictionary to map file extensions to destination folders
 folders = {
     '.mkv': movies_path,
-    '.png': pictures_path,
+    '.mp4': movies_path,
     '.mp3': music_path,
-    '.exe': zip_files_path,
-   '.mkv': series_path
+    '.exe': documents_path,
+    '.pdf': documents_path,
+    '.png': pictures_path,
+    '.jpeg': pictures_path,
+    '.jpg': pictures_path
 }
 
-def delete_duplicates(folder):
-    # Create an empty set to store file hashes
-    file_hashes = set()
+# Iterate over the files in the downloads folder
+for filename in os.listdir(downloads_path):
+    # Get the file extension
+    file_ext = os.path.splitext(filename)[1]
     
-    # Loop through the files in the folder
-    for filename in os.listdir(folder):
-        # Construct the file path
-        file_path = os.path.join(folder, filename)
+    # Check if the file extension is in the dictionary
+    if file_ext in folders:
+        # Get the source and destination paths
+        src_path = os.path.join(downloads_path, filename)
+        dst_path = os.path.join(folders[file_ext], filename)
         
-        # Compute the SHA-1 hash of the file
-        with open(file_path, 'rb') as f:
-            file_hash = hashlib.sha1(f.read()).hexdigest()
-        
-        # Check if the file hash is already in the set
-        if file_hash in file_hashes:
-            # Delete the duplicate file
-            os.remove(file_path)
-        else:
-            # Add the file hash to the set
-            file_hashes.add(file_hash)
-
-class DownloadsHandler(FileSystemEventHandler):
-    def on_created(self, event):
-        # Check if the event is for a file (not a directory)
-        if not event.is_directory:
-            # Get the file path and name
-            file_path = event.src_path
-            file_name = os.path.basename(file_path)
-            
-            # Get the file extension
-            file_ext = os.path.splitext(file_name)[1]
-            
-            # Check if the file extension is in the dictionary
-            if file_ext in folders:
-                # Get the destination folder
-                dest_folder = folders[file_ext]
-                
-                # Construct the destination file path
-                dest_file = os.path.join(dest_folder, file_name)
-                
-                # Copy the file to the destination folder
-                shutil.copy(file_path, dest_file)
-                
-                # Delete duplicate files in the destination folder
-                delete_duplicates(dest_folder)
-    
-    def on_modified(self, event):
-        # Check if the event is for a file (not a directory)
-        if not event.is_directory:
-            print(f"File modified: {event.src_path}")
-    
-    def on_deleted(self, event):
-        # Check if the event is for a file (not a directory)
-        if not event.is_directory:
-            print(f"File deleted: {event.src_path}")
-
-if __name__ == "__main__":
-    # Create an event handler
-    event_handler = DownloadsHandler()
-    
-    # Create an observer
-    observer = Observer()
-    
-    # Schedule the observer to monitor the downloads folder
-    observer.schedule(event_handler, downloads_path, recursive=False)
-    
-    # Start the observer
-    observer.start()
-    
-    try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        observer.stop()
-    
-    observer.join()
+        # Move the file to the destination folder
+        shutil.move(src_path, dst_path)
