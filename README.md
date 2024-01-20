@@ -1,10 +1,18 @@
-I have written a Python script for desktop automation. This tool monitors my download folder and automatically allocates each file according to their format. I used the PyAutoGUI module to perform GUI and desktop automation tasks.
+## Overview:
+This script is a desktop automation tool that monitors my download folder. It moves each file to a specific folder based on its file extension. The tool is written in Python and uses the os and shutil modules to perform file operations.
 
-While coding this script, I faced some technical problems such as detecting new files in the download folder, creating subfolders for different file formats, moving files from the download folder to the corresponding subfolders using PyAutoGUI, and handling errors and exceptions that may occur during the file operations.
+## Technical Problems:
+Some technical problems that I faced while coding this script are:
+- How to set the paths to the download and destination folders.
+- How to create a dictionary to map file extensions to the destination folder.
+- How to iterate over the files in the download folder and get their file extensions.
+- How to move files from the download folder to the corresponding destination folders using shutil.
 
-To solve these problems, I applied the following solutions:
-- I used the os module to list the files in the download folder and the os.path module to get their file names and extensions. I also used the time module to check the modification time of each file to detect new files.
-- I used the os module to create subfolders for different file formats like images, videos, documents, etc. I also checked if the subfolders already existed to avoid creating duplicate folders.
-- I used the PyAutoGUI module to move files from the download folder to the corresponding subfolders using the pyautogui.moveTo() and pyautogui.dragTo() functions. I also used the pyautogui.position() function to get the current position of the mouse cursor and the pyautogui.click() function to simulate mouse clicks.
-- Finally, I used the try and except blocks to handle errors and exceptions that may occur during the file operations like FileNotFoundError, PermissionError, etc. I also used the logging module to log the errors and the status of the file operations.
+## Solutions:
+To solve these technical problems, I applied the following solutions:
+- I used the os.path.join() function to set the paths to the download and destination folders. This function joins one or more path components and returns a normalized path.
+- I used a Python dictionary to create a key-value pair for each file extension and destination folder. A dictionary is a collection of items that are unordered, changeable, and indexed.
+- I used the os.listdir() function to iterate over the files in the download folder. This function returns a list of all the files and directories in the specified path. I also used the os.path.splitext() function to get the file extension of each file. This function splits the pathname into a pair (root, ext) such that root + ext == p.
+- I used the shutil.move() function to move files from the download folder to the corresponding destination folders. This function recursively moves a file or directory to another location.
+
 
